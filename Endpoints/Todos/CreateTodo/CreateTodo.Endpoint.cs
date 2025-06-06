@@ -42,7 +42,7 @@ public class CreateTodoEndpoint : Endpoint<CreateTodoRequest, CreateTodoResponse
         //     ThrowIfAnyErrors(); // If there are errors, execution shouldn't go beyond this point
         // }
 
-        _logger.LogInformation("Creating new todo with title {TodoTitle}", req.Title);
+        _logger.LogInformation("[POST /todos]: Creating new todo with title {TodoTitle}", req.Title);
 
         var todo = new Todo
         {
@@ -54,7 +54,7 @@ public class CreateTodoEndpoint : Endpoint<CreateTodoRequest, CreateTodoResponse
         await _dbContext.SaveChangesAsync(ct);
 
 
-        _logger.LogInformation("Added new todo with title {TodoTitle}", req.Title);
+        _logger.LogInformation("[POST /todos]: Added new todo");
         var response = new CreateTodoResponse { Id = todo.Id };
         await SendAsync(response, statusCode: 201);
     }

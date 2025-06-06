@@ -24,13 +24,13 @@ public class UpdateTodoEndpoint : Endpoint<UpdateTodoRequest>
 
     public override async Task HandleAsync(UpdateTodoRequest req, CancellationToken ct)
     {
-        _logger.LogInformation("Updating todo with ID {TodoId}", req.Id);
+        _logger.LogInformation("[PUT /todos/id]: Updating todo with ID {TodoId}", req.Id);
 
         var todo = await _dbContext.Todos.FindAsync(req.Id);
 
         if (todo is null)
         {
-            _logger.LogWarning("Todo with ID {TodoId} not found for update", req.Id);
+            _logger.LogWarning("[PUT /todos/id]: Todo with ID {TodoId} not found for update", req.Id);
             await SendNotFoundAsync(ct);
             return;
         }
@@ -40,7 +40,7 @@ public class UpdateTodoEndpoint : Endpoint<UpdateTodoRequest>
         todo.Done = req.Done;
 
         await _dbContext.SaveChangesAsync(ct);
-        _logger.LogInformation("Updated todo with ID {TodoId}", req.Id);
+        _logger.LogInformation("[PUT /todos/id]: Updated todo");
         await SendNoContentAsync();
     }
 }

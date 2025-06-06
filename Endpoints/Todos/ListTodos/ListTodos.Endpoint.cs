@@ -3,10 +3,11 @@ using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 
 using TodoApi.Data;
+using TodoApi.Models;
 
 namespace TodoApi.Endpoints.Todos.ListTodos;
 
-public class ListTodosEndpoint : EndpointWithoutRequest<ListTodosResponse>
+public class ListTodosEndpoint : EndpointWithoutRequest<ListTodosModelResponse>
 {
     private readonly TodoDbContext _dbContext;
     private readonly ILogger<ListTodosEndpoint> _logger;
@@ -25,17 +26,12 @@ public class ListTodosEndpoint : EndpointWithoutRequest<ListTodosResponse>
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        _logger.LogInformation("Getting all todos");
+        _logger.LogInformation("[GET /todos]: Getting all todos");
         var todos = await _dbContext.Todos.ToListAsync(ct);
         // Map to response
-        var response = new ListTodosResponse
+        var response = new ListTodosModelResponse
         {
-            Items = todos.Select(t => new TodoItem
-            {
-                Id = t.Id,
-                Title = t.Title,
-                Done = t.Done
-            }).ToList(),
+            Items = todos.Select(t => new Todo { Id = t.Id, Title = t.Title, Done = t.Done }).ToList(),
             TotalCount = todos.Count
         };
 

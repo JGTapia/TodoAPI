@@ -23,7 +23,7 @@ public class GetTodoEndpoint : Endpoint<GetTodoRequest, GetTodoResponse>
 
     public override async Task HandleAsync(GetTodoRequest req, CancellationToken ct)
     {
-        _logger.LogInformation("Getting todo with ID {TodoId}", req.Id);
+        _logger.LogInformation("[GET /todos/id]: Getting todo with ID {TodoId}", req.Id);
         var todo = await _dbContext.Todos.FindAsync(req.Id);
 
         if (todo is null)
@@ -34,11 +34,6 @@ public class GetTodoEndpoint : Endpoint<GetTodoRequest, GetTodoResponse>
         }
 
         _logger.LogInformation("Returning todo with ID {TodoId}", req.Id);
-        var response = new GetTodoResponse
-        {
-            Title = todo.Title,
-            Done = todo.Done
-        };
-        await SendAsync(response);
+        await SendAsync(new GetTodoResponse { Title = todo.Title, Done = todo.Done });
     }
 }

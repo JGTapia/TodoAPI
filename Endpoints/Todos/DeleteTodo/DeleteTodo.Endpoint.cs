@@ -23,13 +23,13 @@ public class DeleteTodo : Endpoint<DeleteTodoRequest>
 
     public override async Task HandleAsync(DeleteTodoRequest req, CancellationToken ct)
     {
-        _logger.LogInformation("Deleting todo with ID {TodoId}", req.Id);
+        _logger.LogInformation("[DELETE /todos/delete/id]: Deleting todo with ID {TodoId}", req.Id);
 
         var todo = await _dbContext.Todos.FindAsync(req.Id);
 
         if (todo is null)
         {
-            _logger.LogWarning("Todo with ID {TodoId} not found for deletion", req.Id);
+            _logger.LogWarning("[DELETE /todos/delete/id]: Todo with ID {TodoId} not found for deletion", req.Id);
             await SendNotFoundAsync(ct);
             return;
         }
@@ -37,7 +37,7 @@ public class DeleteTodo : Endpoint<DeleteTodoRequest>
         _dbContext.Todos.Remove(todo);
         await _dbContext.SaveChangesAsync(ct);
 
-        _logger.LogInformation("Deleted todo with ID {TodoId}", req.Id);
+        _logger.LogInformation("[DELETE /todos/delete/id]: Deleted todo");
         await SendNoContentAsync();
     }
 }
