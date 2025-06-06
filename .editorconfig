@@ -1,0 +1,5 @@
+[*.cs]
+# Organize usings
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+dotnet_remove_unnecessary_using_directives = true
