@@ -17,5 +17,15 @@ public static class SeedData
             });
             db.SaveChanges();
         }
+        if (!db.Products.Any())
+        {
+            db.Products.AddRange(new[]
+            {
+                new Product { Name = "Product 1", Description = "Description 1", Manufacturer = "Manufacturer 1", Stock = 5, Price = 100 },
+                new Product { Name = "Product 2", Description = "Description 2", Manufacturer = "Manufacturer 2", Stock = 10, Price = 200 },
+                new Product { Name = "Product 3", Description = "Description 3", Manufacturer = "Manufacturer 3", Stock = 15, Price = 300 }
+            });
+            db.SaveChanges();
+        }
     }
 }
