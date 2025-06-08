@@ -1,5 +1,7 @@
 global using FluentValidation;
 
+using System.Runtime.CompilerServices;
+
 using FastEndpoints;
 using FastEndpoints.Swagger;
 
@@ -8,6 +10,8 @@ using Microsoft.EntityFrameworkCore; // This is crucial
 using Serilog;
 
 using TodoApi.Data;
+
+[assembly: InternalsVisibleTo("Tests")]
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +42,11 @@ builder.Host.UseSerilog();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
-app.UseFastEndpoints();
+app.UseFastEndpoints(
+       c =>
+       {
+           c.Errors.UseProblemDetails();
+       });
 app.UseSwaggerGen();
 
 
@@ -54,3 +62,5 @@ using (var scope = app.Services.CreateScope())
 Log.Information("Todo API is starting...");
 
 app.Run();
+
+public partial class Program;

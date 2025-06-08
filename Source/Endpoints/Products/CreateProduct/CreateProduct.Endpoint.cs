@@ -18,7 +18,7 @@ public class CreateProductEndpoint : Endpoint<CreateProductRequest, CreateProduc
 
     public override void Configure()
     {
-        Post("/products/create");
+        Post("/products");
         Validator<CreateProductValidator>();
         AllowAnonymous();
     }

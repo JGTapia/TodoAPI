@@ -29,11 +29,38 @@ public class UpdateProductEndpoint : Endpoint<UpdateProductRequest>
             return;
         }
 
-        product.Name = req.Name;
-        product.Description = req.Description;
-        product.Manufacturer = req.Manufacturer;
-        product.Stock = req.Stock;
-        product.Price = req.Price;
+        bool isModified = false;
+        if (req.Name != string.Empty)
+        {
+            product.Name = req.Name;
+            isModified = true;
+        }
+        if (req.Description != string.Empty)
+        {
+            product.Description = req.Description;
+            isModified = true;
+        }
+        if (req.Manufacturer != string.Empty)
+        {
+            product.Manufacturer = req.Manufacturer;
+            isModified = true;
+        }
+        if (req.Stock != null)
+        {
+            product.Stock = (int)req.Stock;
+            isModified = true;
+        }
+        if (req.Price != null)
+        {
+            product.Price = (decimal)req.Price;
+            isModified = true;
+        }
+
+        if (!isModified)
+        {
+            await SendNoContentAsync(ct);
+            return;
+        }
 
         await _dbContext.SaveChangesAsync(ct);
         await SendOkAsync(ct);
