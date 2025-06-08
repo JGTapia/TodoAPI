@@ -8,5 +8,5 @@ public class Product
     public required string Description { get; set; }
     public required string Manufacturer { get; set; }
     public int Stock { get; set; }
-    public int Price { get; set; }
+    public decimal Price { get; set; }
 }
