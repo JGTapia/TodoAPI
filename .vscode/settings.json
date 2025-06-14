@@ -1,0 +1,13 @@
+{
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "dotnet.formatting.organizeImportsOnFormat": true,
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true
+    }
+}

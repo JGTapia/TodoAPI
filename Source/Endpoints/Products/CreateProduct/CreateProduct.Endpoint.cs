@@ -25,7 +25,7 @@ public class CreateProductEndpoint : Endpoint<CreateProductRequest, CreateProduc
 
     public override async Task HandleAsync(CreateProductRequest req, CancellationToken ct)
     {
-        _logger.LogInformation("[POST /products]: Creating new product with name {ProductName}", req.Name);
+        _logger.LogInformation("[POST /products]: Creating product {@Product}", req);
 
         var product = new Product
         {
